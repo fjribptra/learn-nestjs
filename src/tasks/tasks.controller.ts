@@ -1,20 +1,27 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateTaskDto } from './dtos/create-task.dto';
+import { TasksService } from './tasks.service';
 
 @Controller('tasks')
 export class TasksController {
+  taskService: TasksService
+
+  constructor() {
+    this.taskService = new TasksService
+  }
+
   @Get()
   listTasks() {
-    return 'This action return all tasks'
+    return this.taskService.findAll()
   }
 
   @Post()
   createTask(@Body() body: CreateTaskDto) {
-    return body
+    return this.taskService.create(body.title, body.description) 
   }
 
   @Get(':id')
   getTask(@Param('id') id: string) {
-    return `Get only one #${id}`
+    return this.taskService.findOne(id)
   }
 }

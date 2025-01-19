@@ -1,22 +1,21 @@
+import { Injectable } from "@nestjs/common";
 import { TasksRepository } from "./tasks.repository";
+@Injectable()
 
 export class TasksService {
-    taskrepo: TasksRepository
 
-    constructor() {
-        this.taskrepo = new TasksRepository
-    }
+    constructor(public taskRepo: TasksRepository) {}
 
     findAll() {
-        return this.taskrepo.findall()
+        return this.taskRepo.findall()
     }
 
     findOne(id: string) {
-        return this.taskrepo.findOne(id)
+        return this.taskRepo.findOne(id)
     }
 
     create(title: string, description: string) {
-        return this.taskrepo.create(title, description)
+        return this.taskRepo.create(title, description)
     }
 }
 
